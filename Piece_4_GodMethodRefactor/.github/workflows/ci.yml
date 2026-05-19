@@ -5,29 +5,18 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
-
-      - name: Restore dependencies
+      - name: Restore
         run: dotnet restore Piece_4_GodMethodRefactor/OrderRefactorApi/OrderRefactorApi.csproj
-
-      - name: Restore test dependencies
-        run: dotnet restore Piece_4_GodMethodRefactor/OrderRefactorApi.Tests/OrderRefactorApi.Tests.csproj
-
-      - name: Build main project
+      - name: Build
         run: dotnet build Piece_4_GodMethodRefactor/OrderRefactorApi/OrderRefactorApi.csproj --no-restore --configuration Release
-
-      - name: Build test project
-        run: dotnet build Piece_4_GodMethodRefactor/OrderRefactorApi.Tests/OrderRefactorApi.Tests.csproj --no-restore --configuration Release
-
-      - name: Run tests
-        run: dotnet test Piece_4_GodMethodRefactor/OrderRefactorApi.Tests/OrderRefactorApi.Tests.csproj --no-build --configuration Release --verbosity normal
+      - name: Test
+        run: dotnet test Piece_4_GodMethodRefactor/OrderRefactorApi.Tests/OrderRefactorApi.Tests.csproj --configuration Release --verbosity normal
